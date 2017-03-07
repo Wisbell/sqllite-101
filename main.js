@@ -121,6 +121,8 @@ const populateEmployees = () => {
 
 db.all(`SELECT * FROM employees ORDER BY first ASC`, (err, allRows) => {
 
+  if(err) { return console.log(err) };
+
   let bigMoney = allRows.filter((obj)=>{
     return obj.salary >= 50000
   })
@@ -132,3 +134,15 @@ db.all(`SELECT * FROM employees ORDER BY first ASC`, (err, allRows) => {
   coolArray.forEach((each)=> console.log(each))
 
 })
+
+
+
+
+/*
+module.exports = { dropEmployees }
+
+require('dropEmployees') - runs file
+
+
+can call dropEmployees.js from node
+*/
