@@ -42,7 +42,9 @@ const populateEmployees = () => {
 //   console.log(row)
 // })
 
-// returns an array
+
+
+// returns an array and all values from employees
 
 // db.all(`SELECT * FROM employees`, (err, allRows) => {
 //   // console.log(allRows)
@@ -63,18 +65,70 @@ const populateEmployees = () => {
 
 // Destructuring
 
-db.all(`SELECT * FROM employees`, (err, allRows) => {
-  // console.log(allRows)
-  allRows.forEach( ({ id, first, last, department, salary}) => {
-    // console.log(`woah - ${each.first}`, each)
-    // console.log(`woah - ${each.last}`, each)
-    // console.log(`woah - ${each.id}`, each)
-    // console.log(`woah - ${each.department}`, each)
+// function only fired once - lin 70
 
-    console.log(`
-      ${id} ${first} ${last}
-      from ${department} Department.
-      Salary: ${salary}
-      `)
+// db.all(`SELECT * FROM employees`, (err, allRows) => {
+//   // console.log(allRows)
+//   allRows.forEach( ({ id, first, last, department, salary}) => {
+//     // console.log(`woah - ${each.first}`, each)
+//     // console.log(`woah - ${each.last}`, each)
+//     // console.log(`woah - ${each.id}`, each)
+//     // console.log(`woah - ${each.department}`, each)
+
+//     console.log(`
+//       ${id} ${first} ${last}
+//       from ${department} Department.
+//       Salary: ${salary}
+//       `)
+//   })
+// })
+
+
+// each allows call back function to fire for each row returned
+// you dont have to wait for all values to be returned
+
+// does not return an array - better for larger databases
+
+// db.each(`SELECT * FROM employees`, (err, { id, first, last, department, salary}) => {
+//   // console.log(each)
+
+//   console.log(`
+//       ${id} ${first} ${last}
+//       from ${department} Department.
+//       Salary: ${salary}
+//       `)
+// })
+
+
+
+// db.each(`SELECT * FROM employees`, (err, { id, first, last, department, salary}) => {
+//   // console.log(each)
+//   console.log(new Date.getMilliseconds())
+//   console.log(`
+//       ${id} ${first} ${last}
+//       from ${department} Department.
+//       Salary: ${salary}
+//       `)
+// })
+
+
+
+// sort all records alphabetically
+
+// create a new array of all employees tha tmake more than 50 000
+
+// use this new array , create an arra ythat says each eprsons first and last name, as well as their salary
+
+db.all(`SELECT * FROM employees ORDER BY first ASC`, (err, allRows) => {
+
+  let bigMoney = allRows.filter((obj)=>{
+    return obj.salary >= 50000
   })
+
+  let coolArray = bigMoney.map((obj)=>{
+    return `${obj.first} ${obj.last} makes ${obj.salary}`
+  })
+
+  coolArray.forEach((each)=> console.log(each))
+
 })
